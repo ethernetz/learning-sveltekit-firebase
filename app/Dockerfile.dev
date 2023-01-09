@@ -4,7 +4,6 @@ FROM node:19-alpine3.16
 USER node
 
 # Create and define the node_modules's cache directory.
-RUN mkdir -p /home/node/cache
 WORKDIR /home/node/cache
 
 # Install the application's dependencies into the node_modules's cache directory.
@@ -13,7 +12,7 @@ COPY --chown=node:node package-lock.json ./
 RUN npm install
 
 # Create and define the application's working directory.
-RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 
-CMD [ "npm", "run", "dev" ]
+# Expose port 5173 for the SvelteKit app
+EXPOSE 5173
