@@ -7,8 +7,7 @@ USER node
 WORKDIR /home/node/cache
 
 # Install the application's dependencies into the node_modules's cache directory.
-COPY --chown=node:node package.json ./
-COPY --chown=node:node package-lock.json ./
+COPY --chown=node:node package.json package-lock.json* ./
 RUN npm install
 
 # Create and define the application's working directory.
