@@ -13,5 +13,5 @@ services:
       [
         sh,
         -c,
-        "cp -r /home/node/cache/node_modules/. /home/node/app/node_modules/ && npm run dev -- --host"
+        "cp -r /home/node/cache/. /home/node/app/. && npm run dev -- --host"
       ]
