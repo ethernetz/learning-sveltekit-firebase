@@ -6,5 +6,4 @@
     },
     "svelte.enable-ts-plugin": true,
     "svelte.plugin.svelte.defaultScriptLanguage": "ts",
-    "svelte.plugin.svelte.format.config.svelteStrictMode": true,
 }
