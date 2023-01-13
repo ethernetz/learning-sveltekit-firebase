@@ -1,3 +1,5 @@
+import type { LayoutServerLoad } from './$types';
+
 const posts = [
     {
         slug: 'welcome',
@@ -20,8 +22,7 @@ const posts = [
     }
 ];
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load() {
+export const load: LayoutServerLoad = ({ params }) => {
     return {
         summaries: posts.map((post) => ({
             slug: post.slug,
