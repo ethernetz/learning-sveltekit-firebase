@@ -1,11 +1,11 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { onMount } from 'svelte';
 	import { addMessage, initialize } from '@services/firebase';
 	onMount(async () => {
 		console.log('Hello!');
 		await initialize();
 	});
-</script>
+</script> -->
 
 <nav>
 	<a href="/">home</a>
