@@ -1,12 +1,13 @@
 version: "3.8"
 services:
   app:
-    container_name: sveltekit
+    image: sveltekit
     build:
       dockerfile: Dockerfile.dev
       context: ./app
     volumes:
       - ./app:/home/node/app # Drop all our code from ./app into container's usr/src/app directory 
+      - sveltekit-output:/home/node/app/.svelte-kit
     ports:
       - "5173:5173"
     command:
@@ -16,3 +17,19 @@ services:
         -c,
         "cp -r /home/node/cache/. /home/node/app/. && npm run dev -- --host"
       ]
+
+  backend:
+    image: firebase
+    build:
+      context: ./firebase
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4000:4000
+      - 8080:8080
+      - 5000:5000
+    volumes:
+      - ./firebase:/app
+      - sveltekit-output:/app/anothertest
+
+volumes:
+  sveltekit-output:
