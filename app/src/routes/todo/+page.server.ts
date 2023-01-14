@@ -5,11 +5,11 @@ import type { PageServerLoad, Actions } from './$types';
 // rather than in memory. But for now, we cheat.
 const db = new Map<string, { id: string, description: string, done: boolean }[]>();
 
-export function getTodos(userid: string) {
+function getTodos(userid: string) {
     return db.get(userid) ?? [];
 }
 
-export function createTodo(userid: string, description: string) {
+function createTodo(userid: string, description: string) {
     if (!db.has(userid)) {
         db.set(userid, []);
     }
@@ -23,7 +23,7 @@ export function createTodo(userid: string, description: string) {
     });
 }
 
-export function deleteTodo(userid: string, todoid: string) {
+function deleteTodo(userid: string, todoid: string) {
     const todos = db.get(userid) ?? [];
     const index = todos.findIndex((todo) => todo.id === todoid);
 
