@@ -1,10 +1,3 @@
-<script lang="ts">
-	import type { LayoutData } from './$types';
-	import { initialize } from '@services/firebase';
-
-	initialize();
-</script>
-
 <nav>
 	<a href="/">home</a>
 	<a href="/about">about</a>
