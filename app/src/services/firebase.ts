@@ -33,7 +33,8 @@ let connectedFirestoreEmulator = false;
 let connectedAuthEmulator = false;
 
 // These functions should be called in onMount when used in components
-export const auth = () => {
+export const authenticate = () => {
+    console.log('🔥 Authenticating user');
     const auth = getAuth(app);
 
     if (config.useEmulators && !connectedAuthEmulator) {
@@ -62,10 +63,11 @@ export const db = () => {
     return initializedFirestore;
 };
 
-export const initialize = async () => {
+export const initialize = (): FirebaseApp => {
     console.log('🔥 Initializing Firebase SDK');
     console.log(config.firebase);
     app = initializeApp(config.firebase);
+    return app;
 };
 
 export const addMessage = async (name: string, message: string) => {

@@ -6,4 +6,4 @@ RUN npm install -g firebase-tools
 
 WORKDIR /app
 
-CMD [ "firebase", "--project=sveltekit-firebase-1e60f", "emulators:start", "--only", "hosting" ]
+CMD [ "firebase", "--project=sveltekit-firebase-1e60f", "emulators:start", "--only", "auth" ]

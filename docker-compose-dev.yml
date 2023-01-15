@@ -25,6 +25,7 @@ services:
     ports:
       - 4000:4000
       - 8080:8080
-      - 9005:9005 # Used for firebase login authentication 
+      - 9099:9099 # Used for firebase auth emulator
+      - 9005:9005 # Used for `firebase login` authentication 
     volumes:
       - ./firebase:/app

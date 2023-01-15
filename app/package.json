@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"firebase": "^9.15.0"
+		"firebase": "^9.15.0",
+		"firebaseui": "^6.0.2"
 	}
 }
