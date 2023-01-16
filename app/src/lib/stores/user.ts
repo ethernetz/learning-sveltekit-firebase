@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import type { Auth, User } from 'firebase/auth';
 import { derived, type Readable } from 'svelte/store';
-import { auth } from '$lib/authStore';
+import { auth } from '$lib/stores';
 
 function createUser() {
     const { subscribe } = derived<Readable<Auth>, User | null>(

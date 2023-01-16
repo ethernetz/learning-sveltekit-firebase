@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { auth } from '$lib/authStore';
-	import { user } from '$lib/userStore';
+	import { user, auth } from '$lib/stores';
 </script>
 
 <div>This is the login page...</div>
@@ -11,7 +10,7 @@
 	<div>Nothing yet</div>
 {:else if $user === null}
 	<div>sign in here</div>
-	<!-- <button on:click={() => auth.signInWith('google')}>Sign in with google</button> -->
+	<button on:click={() => auth.signInWith('google')}>Sign in with google</button>
 {:else}
 	<div>I am signed in!</div>
 {/if}

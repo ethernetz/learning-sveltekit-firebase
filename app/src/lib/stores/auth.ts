@@ -2,7 +2,7 @@ import type { Auth, } from "firebase/auth";
 import type { FirebaseApp } from 'firebase/app';
 import { browser, dev } from '$app/environment';
 import { derived, type Readable } from 'svelte/store';
-import { app } from '$lib/firebase';
+import { app } from '$lib/stores';
 
 const createAuth = () => {
     let auth: Auth;
