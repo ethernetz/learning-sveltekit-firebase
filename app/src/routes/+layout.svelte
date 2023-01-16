@@ -5,6 +5,7 @@
 	<a href="/todo">todo</a>
 	<a href="/dice">dice</a>
 	<a href="/signin">signin</a>
+	<a href="/viewcount">viewcount</a>
 </nav>
 
 <slot />

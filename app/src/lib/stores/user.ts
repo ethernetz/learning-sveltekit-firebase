@@ -9,11 +9,9 @@ function createUser() {
     const { subscribe } = derived<Readable<Auth>, User | null>(
         auth,
         ($auth, set) => {
-
             /** Firebase app is not ready yet */
             if (!$auth)
                 return;
-
             /** User is already created, no reason to initialize */
             if (user !== undefined)
                 return;
