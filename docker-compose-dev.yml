@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - 4000:4000
-      - 8080:8080
+      - 8080:8080 # Used for firestore emulator
       - 9099:9099 # Used for firebase auth emulator
       - 9005:9005 # Used for `firebase login` authentication 
     volumes:

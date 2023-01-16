@@ -20,14 +20,19 @@ function createApp() {
 
     const { subscribe } = readable<FirebaseApp>(undefined, (set) => {
         async function init() {
-            if (!app) {
-                const { initializeApp } = await import('firebase/app');
-                app = initializeApp(options);
-            }
+            /** Only use firebase sdk on client */
+            if (!browser)
+                return;
+            /** App is already created, no reason to initialize */
+            if (app)
+                return;
+
+            const { initializeApp } = await import('firebase/app');
+            app = initializeApp(options);
             set(app);
         }
 
-        if (browser) init();
+        init();
     });
 
     return { subscribe };
