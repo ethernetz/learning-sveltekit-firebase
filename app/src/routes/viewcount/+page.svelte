@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { viewcount } from '$lib/stores';
+	import { onMount } from 'svelte';
+
+	onMount(() => viewcount.increment());
 </script>
 
 {#if $viewcount}
