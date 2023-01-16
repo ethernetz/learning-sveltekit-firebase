@@ -29,4 +29,4 @@ export const load: LayoutServerLoad = ({ params }) => {
             title: post.title
         }))
     };
-}
+};
