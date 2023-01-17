@@ -16,8 +16,6 @@ function createUser() {
             if (user !== undefined)
                 return;
 
-            console.log('going to subscribe to user');
-
             let unsubAuth = () => { };
 
             async function init() {
@@ -32,7 +30,6 @@ function createUser() {
             init();
 
             return () => {
-                console.log('unsubscribing from user');
                 user = undefined;
                 unsubAuth();
             };
