@@ -16,5 +16,5 @@ jobs:
       with:
         args: deploy --only firestore
       env:
-        GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SVELTEKIT_FIREBASE_1E60F }}
+        GCP_SA_KEY: ${{ secrets.TEST_KEY }}
         PROJECT_PATH: ./firebase
