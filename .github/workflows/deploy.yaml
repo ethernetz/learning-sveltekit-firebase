@@ -16,5 +16,5 @@ jobs:
       with:
         args: deploy --only firestore
       env:
-        GCP_SA_KEY: ${{ secrets.TEST_KEY }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         PROJECT_PATH: ./firebase
