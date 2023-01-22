@@ -3,7 +3,7 @@ import type { PageServerLoad, Actions } from './$types';
 
 // In a real app, this data would live in a database,
 // rather than in memory. But for now, we cheat.
-const db = new Map<string, { id: string, description: string, done: boolean }[]>();
+const db = new Map<string, { id: string, description: string, done: boolean; }[]>();
 
 function getTodos(userid: string) {
     return db.get(userid) ?? [];
@@ -73,4 +73,4 @@ export const load: PageServerLoad = ({ cookies }) => {
     return {
         todos: getTodos(id)
     };
-}
+};

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { viewcount } from '$lib/stores';
+	import { viewcount, functions } from '$lib/stores';
 	import { onMount } from 'svelte';
 
 	onMount(() => viewcount.increment());
@@ -9,4 +9,8 @@
 	{$viewcount}
 {:else}
 	there is no viewcount...
+{/if}
+
+{#if $functions}
+	<button on:click={() => functions.sayHello()}>Hello hello</button>
 {/if}
