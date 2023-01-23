@@ -6,6 +6,7 @@
 	<a href="/dice">dice</a>
 	<a href="/signin">signin</a>
 	<a href="/viewcount">viewcount</a>
+	<a href="/functions">functions</a>
 </nav>
 
 <slot />

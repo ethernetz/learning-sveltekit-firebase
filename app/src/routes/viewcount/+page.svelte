@@ -10,7 +10,3 @@
 {:else}
 	there is no viewcount...
 {/if}
-
-{#if $functions}
-	<button on:click={() => functions.sayHello()}>Hello hello</button>
-{/if}
