@@ -19,26 +19,27 @@ function createUser() {
 			if (userDataCache !== undefined) return;
 
 			let unsubAuth: () => void;
+			let unsubUser: () => void;
 
 			async function init() {
 				if ($auth) {
 					const { onAuthStateChanged } = await import('firebase/auth');
 					unsubAuth = onAuthStateChanged($auth, async (nextUser) => {
-						console.log(nextUser);
+						/** User is not signed in yet */
 						if (!nextUser) {
 							set(null);
 							return;
 						}
 						const userRef = await firestore.user($firestore, nextUser.uid);
-						const { getDoc } = await import('firebase/firestore');
-						const userDocSnap = await getDoc(userRef);
-						const userData = userDocSnap.data();
-						if (!userData) {
-							console.error('No user data?');
-							return;
-						}
-						console.log(userData);
-						set(userData);
+						const { onSnapshot } = await import('firebase/firestore');
+						unsubUser = onSnapshot(userRef, (userDocSnap) => {
+							const userData = userDocSnap.data();
+							/** User just created an account but it hasn't been added to firestore yet */
+							if (!userData) {
+								return;
+							}
+							set(userData);
+						});
 					});
 				}
 			}
@@ -47,6 +48,7 @@ function createUser() {
 			return () => {
 				userDataCache = undefined;
 				unsubAuth?.();
+				unsubUser?.();
 			};
 		}
 	);
