@@ -8,7 +8,7 @@ const createViewcount = () => {
 			/** Firestore is not ready yet */
 			if (!$firestore) return;
 
-			const viewcountDocRef = await firestore.docs.viewcount();
+			const viewcountDocRef = await firestore.viewcount($firestore);
 			const { getDoc } = await import('firebase/firestore');
 			const viewcountDocSnap = await getDoc(viewcountDocRef);
 			set(viewcountDocSnap.data()?.viewcount ?? 3);
@@ -24,7 +24,7 @@ const createViewcount = () => {
 				if (!$firestore) return;
 				const { increment, runTransaction } = await import('firebase/firestore');
 				await runTransaction($firestore, async (transaction) => {
-					const viewcountDocRef = await firestore.docs.viewcount();
+					const viewcountDocRef = await firestore.viewcount($firestore);
 					transaction.update(viewcountDocRef, { viewcount: increment(1) });
 				});
 				unsubFirestore();

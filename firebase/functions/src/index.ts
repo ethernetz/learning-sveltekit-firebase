@@ -15,5 +15,5 @@ export const createUserDocument = functions.auth.user().onCreate((userRecord) =>
 		displayName: userRecord.displayName,
 		isPremium: false,
 	};
-	return admin.firestore().collection('users').add(user);
+	return admin.firestore().collection('users').doc(userRecord.uid).set(user);
 });
