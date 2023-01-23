@@ -22,26 +22,28 @@ function createUser() {
 			let unsubUser: () => void;
 
 			async function init() {
-				if ($auth) {
-					const { onAuthStateChanged } = await import('firebase/auth');
-					unsubAuth = onAuthStateChanged($auth, async (nextUser) => {
-						/** User is not signed in yet */
-						if (!nextUser) {
-							set(null);
+				console.log('initing user');
+				const { onAuthStateChanged } = await import('firebase/auth');
+				unsubAuth = onAuthStateChanged($auth, async (nextUser) => {
+					console.log('onAuthStateChanged', nextUser);
+					/** User is not signed in yet */
+					if (!nextUser) {
+						set(null);
+						return;
+					}
+					const userRef = await firestore.user($firestore, nextUser.uid);
+					const { onSnapshot } = await import('firebase/firestore');
+					unsubUser = onSnapshot(userRef, (userDocSnap) => {
+						console.log('userDocSnap', userDocSnap);
+						const userData = userDocSnap.data();
+						/** User just created an account but it hasn't been added to firestore yet */
+						if (!userData) {
 							return;
 						}
-						const userRef = await firestore.user($firestore, nextUser.uid);
-						const { onSnapshot } = await import('firebase/firestore');
-						unsubUser = onSnapshot(userRef, (userDocSnap) => {
-							const userData = userDocSnap.data();
-							/** User just created an account but it hasn't been added to firestore yet */
-							if (!userData) {
-								return;
-							}
-							set(userData);
-						});
+						console.log('userData', userData);
+						set(userData);
 					});
-				}
+				});
 			}
 			init();
 
