@@ -1,25 +1,20 @@
-import type { Auth, UserInfo } from 'firebase/auth';
+import type { Auth, User } from 'firebase/auth';
 import { derived, type Readable } from 'svelte/store';
 import { auth, firestore } from '$lib/stores';
 import type { Firestore } from 'firebase/firestore';
 
-export interface UserData extends UserInfo {
-	todos: string[];
-}
-
 function createUser() {
-	let userDataCache: UserData | null | undefined;
+	let userCache: User | null | undefined;
 
-	const { subscribe } = derived<[Readable<Auth>, Readable<Firestore>], UserData | null>(
+	const { subscribe } = derived<[Readable<Auth>, Readable<Firestore>], User | null>(
 		[auth, firestore],
 		([$auth, $firestore], set) => {
 			/** Firebase auth or firestore is not ready yet */
 			if (!$auth || !$firestore) return;
 			/** User is already cached, no reason to initialize */
-			if (userDataCache !== undefined) return;
+			if (userCache !== undefined) return;
 
 			let unsubAuth: () => void;
-			let unsubUser: () => void;
 
 			async function init() {
 				console.log('initing user');
@@ -31,26 +26,14 @@ function createUser() {
 						set(null);
 						return;
 					}
-					const userRef = await firestore.user($firestore, nextUser.uid);
-					const { onSnapshot } = await import('firebase/firestore');
-					unsubUser = onSnapshot(userRef, (userDocSnap) => {
-						console.log('userDocSnap', userDocSnap);
-						const userData = userDocSnap.data();
-						/** User just created an account but it hasn't been added to firestore yet */
-						if (!userData) {
-							return;
-						}
-						console.log('userData', userData);
-						set(userData);
-					});
+					set(nextUser);
 				});
 			}
 			init();
 
 			return () => {
-				userDataCache = undefined;
+				userCache = undefined;
 				unsubAuth?.();
-				unsubUser?.();
 			};
 		}
 	);
