@@ -3,10 +3,24 @@ import type { FirebaseApp } from 'firebase/app';
 import { dev } from '$app/environment';
 import { derived, type Readable } from 'svelte/store';
 import { app, type UserData } from '$lib/stores';
+import type { FirestoreTodo } from './todos';
 
 const typedDoc = async <T>(firestore: Firestore, path: string, ...pathSegments: string[]) => {
 	const { doc } = await import('firebase/firestore');
 	return doc(firestore, path, ...pathSegments).withConverter({
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		toFirestore: (data) => data as any,
+		fromFirestore: (snap) => snap.data() as T
+	});
+};
+
+const typedCollection = async <T>(
+	firestore: Firestore,
+	path: string,
+	...pathSegments: string[]
+) => {
+	const { collection } = await import('firebase/firestore');
+	return collection(firestore, path, ...pathSegments).withConverter({
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		toFirestore: (data) => data as any,
 		fromFirestore: (snap) => snap.data() as T
@@ -38,7 +52,11 @@ const createFirestore = () => {
 		subscribe,
 		viewcount: (firestore: Firestore) =>
 			typedDoc<{ viewcount: number }>(firestore, 'viewcountcollectionid', 'viewcountdocid'),
-		user: (firestore: Firestore, uid: string) => typedDoc<UserData>(firestore, 'users', uid)
+		user: (firestore: Firestore, uid: string) => typedDoc<UserData>(firestore, 'users', uid),
+		userTodos: (firestore: Firestore, uid: string) =>
+			typedCollection<FirestoreTodo>(firestore, 'users', uid, 'todos'),
+		userTodo: (firestore: Firestore, uid: string, todoid: string) =>
+			typedDoc<FirestoreTodo>(firestore, 'users', uid, 'todos', todoid)
 	};
 };
 

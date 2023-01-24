@@ -29,13 +29,11 @@ function createUserData() {
 				const userRef = await firestore.user($firestore, $user.uid);
 				const { onSnapshot } = await import('firebase/firestore');
 				unsubUser = onSnapshot(userRef, (userDocSnap) => {
-					console.log('userDocSnap', userDocSnap);
 					const userData = userDocSnap.data();
 					/** User just created an account but it hasn't been added to firestore yet */
 					if (!userData) {
 						return;
 					}
-					console.log('userData', userData);
 					set(userData);
 				});
 			}
@@ -48,7 +46,9 @@ function createUserData() {
 		}
 	);
 
-	return { subscribe };
+	return {
+		subscribe
+	};
 }
 
 export const userData = createUserData();

@@ -17,10 +17,8 @@ function createUser() {
 			let unsubAuth: () => void;
 
 			async function init() {
-				console.log('initing user');
 				const { onAuthStateChanged } = await import('firebase/auth');
 				unsubAuth = onAuthStateChanged($auth, async (nextUser) => {
-					console.log('onAuthStateChanged', nextUser);
 					/** User is not signed in yet */
 					if (!nextUser) {
 						set(null);

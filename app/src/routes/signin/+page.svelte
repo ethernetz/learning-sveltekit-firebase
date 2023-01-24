@@ -10,7 +10,7 @@
 
 	<IfUserData>
 		<div>I have user data...</div>
-		<div>Todos: {$userData?.isPremium}</div>
+		<div>isPremium: {$userData?.isPremium}</div>
 	</IfUserData>
 
 	<button on:click={() => auth.signOut()}>Sign out</button>
